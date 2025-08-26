@@ -11,7 +11,11 @@ export default function Index() {
         <TextInput style={styles.input} placeholder="E-mail Cadastrado" placeholderTextColor={colors.text}/>
         <Text style={styles.text}>Senha</Text>
         <TextInput style={styles.input} placeholder="Senha Cadastrada" placeholderTextColor={colors.text}/>
-        <Button title= "Entrar" textColor={colors.text} backgroundColor={colors.secondary}/>
+        <Button title= "Entrar" textColor={colors.text} 
+          backgroundColor={colors.secondary}
+          style={styles.button}
+          textStyle= {styles.btnText}  
+        />
     </View>
   );
 }
