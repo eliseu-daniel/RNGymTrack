@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { StyleProp, Text, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 
 type ButtonProps = {
