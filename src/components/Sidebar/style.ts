@@ -5,34 +5,31 @@ export const styles = StyleSheet.create({
     container:{
         flex: 1,
         backgroundColor: colors.primary,
-        width: "50%",
     },
     header:{
-        marginLeft: 20,
-        marginTop: 20,
+        marginTop: 70,
+        marginLeft: 30,
     },
     text:{
         color: colors.text,
-        fontSize: 20,
+        fontSize: 28,
         fontWeight: "bold",
     },
     menu:{
         justifyContent: "center",
-        alignItems: "flex-start",
         marginTop: 20,   
-        marginLeft: 20,     
+        marginLeft: 20,  
+          
     },
     items:{
         color: colors.text,
-        fontSize: 18, 
+        fontSize: 24, 
     },
     button: {
-        padding: 12,
+        padding: 8,
         borderRadius: 8,
-        alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 16,
-        backgroundColor: colors.secondary, // ver com chat como fazer uma borda piscante quando clico, igual o hover
+        
     },
 
 })
