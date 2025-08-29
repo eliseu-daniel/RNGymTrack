@@ -1,4 +1,5 @@
 import Checkbox from "expo-checkbox";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
 import Button from "../Button/Button";
@@ -6,11 +7,17 @@ import { styles } from "./style";
 
 export default function Training() {
   const [isChecked, setChecked] = useState(false);
+
+  const router = useRouter();
+
+  const handleFinishTraining = () => {
+    router.back();
+  }
   
     return (
     <View style={styles.container}>
         <View style={styles.FinishTraining}>
-            <Button title="Terminar" onPress={() => {}} textStyle={styles.btnFinishTrainingText} style={styles.btnFinish}/>
+            <Button title="Terminar" onPress={() => {handleFinishTraining}} textStyle={styles.btnFinishTrainingText} style={styles.btnFinish}/>
         </View>
         <View>
             <Text style= {styles.dayOfWeek}>Segunda</Text>
