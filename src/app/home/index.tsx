@@ -12,7 +12,7 @@ export default function Home() {
     const router = useRouter();
 
     const handleNavigation = () => {
-        router.push("/trainingSelected");
+        router.push('/trainingSelected');
     };
 
     const toggleSidebar = () => {
@@ -36,7 +36,7 @@ export default function Home() {
             <View style={styles.sections}>
                 {/* usar map para renderizar a quantidade de botões e os title */}
                 <Button title="Segunda" onPress={handleNavigation} style={styles.button} textStyle={styles.btnText} textColor={colors.text}/>
-                <Button title="Terça" style={styles.button}   textStyle={styles.btnText} textColor={colors.text}/>
+                <Button title="Terça" onPress={handleNavigation} style={styles.button}   textStyle={styles.btnText} textColor={colors.text}/>
                 <Button title="Quarta" style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>
                 <Button title="Quinta" style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>               
                 <Button title="Sexta" style={styles.button}   textStyle={styles.btnText} textColor={colors.text}/>
