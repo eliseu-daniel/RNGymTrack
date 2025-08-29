@@ -27,9 +27,6 @@ export const styles = StyleSheet.create( {
         fontSize: 18,
         fontWeight: "bold",
     },
-    trainingContainer: {
-        marginTop: 20,
-    },
     dayOfWeek:{
         fontSize: 22,
         color: colors.blue,
@@ -40,36 +37,12 @@ export const styles = StyleSheet.create( {
         marginLeft: 20,
         fontSize: 18,
         color: colors.text,
+    },   
+    trainingContainer: {
+        height: "75%",
     },
-    titleTraining:
-    {
-        marginLeft: 20,
-        fontSize: 20,
-        color: colors.blue,
-    },
-    headerTable: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        color: colors.text,
-        marginTop: 10,
-    },
-    headerTableText: {
-        color: colors.text,
-        fontSize:18,
-    },
-    ColumTable: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        marginTop: 10,
-        alignItems: "center",
-    },
-    TableContentText: {
-        color: colors.text,
-        fontSize: 16,
-    },
-    checkBox: {
-        width: 20,
-        height: 20,
-        tintColor: colors.text,
-    },
+    divider: {
+        marginTop: 20,
+    },  
+    
 });

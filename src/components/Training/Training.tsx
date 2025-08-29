@@ -1,23 +1,27 @@
-import Checkbox from "expo-checkbox";
+
+import { exerciseData } from "@/utils/dataTraining";
 import { useRouter } from "expo-router";
-import { useState } from "react";
-import { Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import Button from "../Button/Button";
+import Exercises from "../ListExercises/Exercises";
+import TrainingHeader from "../TrainingHeader/Header";
+import TrainingTitle from "../TrainingTitle/Title";
 import { styles } from "./style";
 
 export default function Training() {
-  const [isChecked, setChecked] = useState(false);
-
   const router = useRouter();
 
   const handleFinishTraining = () => {
     router.back();
   }
-  
+ 
     return (
     <View style={styles.container}>
         <View style={styles.FinishTraining}>
-            <Button title="Terminar" onPress={() => {handleFinishTraining}} textStyle={styles.btnFinishTrainingText} style={styles.btnFinish}/>
+            <Button title="Terminar" onPress={handleFinishTraining} 
+                textStyle={styles.btnFinishTrainingText} 
+                style={styles.btnFinish}
+            />
         </View>
         <View>
             <Text style= {styles.dayOfWeek}>Segunda</Text>
@@ -26,46 +30,17 @@ export default function Training() {
             <Text style={styles.timer}>Timer</Text> {/* Colocar um timer aqui */}
         </View>
         <View style={styles.trainingContainer}>
-            <View>
-                <Text style={styles.titleTraining}>Supino Reto</Text>
-            </View>
-            <View>
-                <View style={styles.headerTable}>
-                    <Text style={styles.headerTableText} >Série</Text>
-                    <Text style={styles.headerTableText} >Anterior</Text>
-                    <Text style={styles.headerTableText} >Kg</Text>
-                    <Text style={styles.headerTableText} >Rep</Text>
-                    <Text style={styles.headerTableText} >Check</Text>
+            <FlatList data={exerciseData} keyExtractor={item => item.id} renderItem={({item}) => (
+                <View> 
+                    <TrainingTitle title={item.title} />
+                    <TrainingHeader />
+                    <Exercises series={item.series} anterior={item.anterior} kg={item.kg} rep={item.rep}/>
+                    <Exercises series={item.series} anterior={item.anterior} kg={item.kg} rep={item.rep}/>
+                    <Exercises series={item.series} anterior={item.anterior} kg={item.kg} rep={item.rep}/>
+                    <Exercises series={item.series} anterior={item.anterior} kg={item.kg} rep={item.rep}/>
                 </View>
-                <View style={styles.ColumTable}>
-                    <Text style={styles.TableContentText}>1</Text>
-                    <Text style={styles.TableContentText}>50 x 8</Text>
-                    <Text style={styles.TableContentText}>55</Text>
-                    <Text style={styles.TableContentText}>6</Text>
-                    <Checkbox value={isChecked} onValueChange={setChecked}  style={styles.checkBox} />
-                </View>
-                <View style={styles.ColumTable}>
-                    <Text style={styles.TableContentText}>2</Text>
-                    <Text style={styles.TableContentText}>50 x 8</Text>
-                    <Text style={styles.TableContentText}>55</Text>
-                    <Text style={styles.TableContentText}>6</Text>
-                    <Checkbox value={isChecked} onValueChange={setChecked}  style={styles.checkBox} />
-                </View>
-                <View style={styles.ColumTable}>
-                    <Text style={styles.TableContentText}>3</Text>
-                    <Text style={styles.TableContentText}>50 x 8</Text>
-                    <Text style={styles.TableContentText}>55</Text>
-                    <Text style={styles.TableContentText}>6</Text>
-                    <Checkbox value={isChecked} onValueChange={setChecked}  style={styles.checkBox} />
-                </View>
-                <View style={styles.ColumTable}>
-                    <Text style={styles.TableContentText}>4</Text>
-                    <Text style={styles.TableContentText}>50 x 8</Text>
-                    <Text style={styles.TableContentText}>55</Text>
-                    <Text style={styles.TableContentText}>6</Text>
-                    <Checkbox value={isChecked} onValueChange={setChecked}  style={styles.checkBox} />
-                </View>
-            </View>
+             )} style={styles.divider} showsVerticalScrollIndicator = {false}
+            />
         </View>
     </View>
   );
