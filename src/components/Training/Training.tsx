@@ -27,7 +27,7 @@ export default function Training() {
             <Text style= {styles.dayOfWeek}>Segunda</Text>
         </View>
         <View>
-            <Text style={styles.timer}>Timer</Text> {/* Colocar um timer aqui */}
+            <Text style={styles.timer}>Timer {/* Colocar um timer aqui */} </Text> 
         </View>
         <View style={styles.trainingContainer}>
             <FlatList data={exerciseData} keyExtractor={item => item.id} renderItem={({item}) => (
@@ -39,7 +39,7 @@ export default function Training() {
                     <Exercises series={item.series} anterior={item.anterior} kg={item.kg} rep={item.rep}/>
                     <Exercises series={item.series} anterior={item.anterior} kg={item.kg} rep={item.rep}/>
                 </View>
-             )} style={styles.divider} showsVerticalScrollIndicator = {false}
+             )} style={styles.divider} showsVerticalScrollIndicator = {true}
             />
         </View>
     </View>
