@@ -7,9 +7,9 @@ type Exercise = {
   rep: number;
 };
 
-type DateWeek = {
+export type DateWeek = {
   segunda: { exercises: Exercise[] };
-  terca: { exercises: Exercise[] };
+  terça: { exercises: Exercise[] };
   quarta: { exercises: Exercise[] };
   quinta: { exercises: Exercise[] };
   sexta: { exercises: Exercise[] };
@@ -88,7 +88,7 @@ export const DateWeek: DateWeek = [
     segunda: {
       exercises: exerciseMonday,
     },
-    terca: {
+    terça: {
       exercises: exerciseTuesday,
     },
     quarta: {
