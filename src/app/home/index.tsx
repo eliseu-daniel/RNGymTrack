@@ -11,8 +11,8 @@ export default function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
     const router = useRouter();
 
-    const handleNavigation = () => {
-        router.push('/trainingSelected');
+    const handleNavigation = (day: string) => {
+        router.push({pathname: '/trainingSelected', params: { day }});
     };
 
     const toggleSidebar = () => {
@@ -35,13 +35,13 @@ export default function Home() {
             </View>
             <View style={styles.sections}>
                 {/* usar map para renderizar a quantidade de botões e os title */}
-                <Button title="Segunda" onPress={handleNavigation} style={styles.button} textStyle={styles.btnText} textColor={colors.text}/>
-                <Button title="Terça" onPress={handleNavigation} style={styles.button}   textStyle={styles.btnText} textColor={colors.text}/>
-                <Button title="Quarta" style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>
-                <Button title="Quinta" style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>               
-                <Button title="Sexta" style={styles.button}   textStyle={styles.btnText} textColor={colors.text}/>
-                <Button title="Sábado" style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>
-                <Button title="Domingo" style={styles.button} textStyle={styles.btnText} textColor={colors.text}/>
+                <Button title="Segunda" onPress={() => handleNavigation('segunda')} style={styles.button} textStyle={styles.btnText} textColor={colors.text}/>
+                <Button title="Terça" onPress={() => handleNavigation('terça')} style={styles.button}   textStyle={styles.btnText} textColor={colors.text}/>
+                <Button title="Quarta" onPress={() => handleNavigation('quarta')} style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>
+                <Button title="Quinta" onPress={() => handleNavigation('quinta')} style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>               
+                <Button title="Sexta" onPress={() => handleNavigation('sexta')} style={styles.button}   textStyle={styles.btnText} textColor={colors.text}/>
+                <Button title="Sábado" onPress={() => handleNavigation('sabado')} style={styles.button}  textStyle={styles.btnText} textColor={colors.text}/>
+                <Button title="Domingo" onPress={() => handleNavigation('domingo')} style={styles.button} textStyle={styles.btnText} textColor={colors.text}/>
             </View>
         </View>
     );
