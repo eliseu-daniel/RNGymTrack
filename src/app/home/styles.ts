@@ -22,33 +22,23 @@ export const styles = StyleSheet.create({
     },
     header:{
         height: 100,
-        marginTop: 30,
+        marginTop: 70,
         alignItems: "center",
         justifyContent: "center",
     },
-    text:{
+    title: {
+        fontSize: 36,
         color: colors.text,
-        fontSize: 20,
         fontWeight: "bold",
-        textAlign: "center",
+        
     },
-    sections:{
+    content:{
         alignItems: "center",
         marginTop: 20,
         justifyContent: "center"
     },
-    button: {
-        width: "90%",
-        textAlign: "center",
-        alignItems: "center",
-        borderWidth: 1,
-        borderColor: colors.text,
-        borderRadius: 5,
-        padding: 10,
-        margin: 2,
-    },
-    btnText: {
-        fontSize: 20,
-
+    subtitle:{
+        fontSize: 24,
+        color: colors.text,
     }
-})
+});
