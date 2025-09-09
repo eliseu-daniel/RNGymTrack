@@ -1,21 +1,14 @@
 import Menu from "@/components/Menu/Menu";
 import Sidebar from "@/components/Sidebar/Sidebar";
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
 
-type HomeProps = {
-    pacient: string;
-}
-
-export default function Home({pacient}: HomeProps) {
+export default function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
     const router = useRouter();
-
-    const handleNavigation = (day: string) => {
-        router.push('/trainning');
-    };
+    const user = useLocalSearchParams().pacient as string;
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -35,7 +28,7 @@ export default function Home({pacient}: HomeProps) {
                 <Text style={styles.title}>GymTrackPro</Text>
             </View>
             <View style={styles.content}>
-                <Text style={styles.subtitle}>Bem-vindo, {pacient}.</Text>
+                <Text style={styles.subtitle}>Bem-vindo, {user}.</Text>
             </View>
         </View>
     );

@@ -8,18 +8,16 @@ import { Text, View } from "react-native";
 import { styles } from "./styles";
 
 export default function Training() {
-
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-        const router = useRouter();
-    
-        const handleNavigation = (day: string) => {
-            router.push({pathname: '/trainingSelected', params: { day }});
-        };
-    
-        const toggleSidebar = () => {
-            setIsSidebarOpen(!isSidebarOpen);
-        };
+    const router = useRouter();
 
+    const handleNavigation = (day: string) => {
+        router.push({pathname: '/trainingSelected', params: { day }});
+    };
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
     return (
         <View style= {styles.container}>
             <View style={styles.menuContainer}>

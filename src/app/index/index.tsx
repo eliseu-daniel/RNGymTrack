@@ -8,7 +8,7 @@ export default function Index() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push('/home');
+    router.push({pathname: '/home', params: { pacient: 'Eliseu' }});
   }
   
   return (
