@@ -31,5 +31,14 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         
     },
+    logout:{
+        position: "absolute",
+        bottom: 10,
+        
+    },
+    sair:{
+        color: colors.text,
+        fontSize: 18,
+    },
 
 })
