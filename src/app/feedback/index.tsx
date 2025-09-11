@@ -11,8 +11,8 @@ export default function FeedBacks() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const router = useRouter();
 
-    const handleNavigation = (day: string) => {
-        router.push({pathname: '/dietSelected', params: { day }}); // trocar para feedbackSelected
+    const handleNavigation = (choice: string) => {
+        router.push({pathname: '/feedbackSelected', params: { choice }});
     };
 
     const toggleSidebar = () => {
