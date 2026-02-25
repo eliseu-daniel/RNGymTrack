@@ -8,14 +8,14 @@ import { styles } from "./styles";
 export default function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
     const router = useRouter();
-    const user = useLocalSearchParams().pacient as string;
+    const user = useLocalSearchParams().patientName as string;
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
-    
+
     return (
-        <View style= {styles.container}>
+        <View style={styles.container}>
             <View style={styles.menuContainer}>
                 <Menu toggleSidebar={toggleSidebar} />
             </View>
