@@ -28,7 +28,7 @@ export default function Index() {
       // response.patient vem do backend
       const patient = response.patient;
 
-      router.push({
+      router.replace({
         pathname: "/home",
         params: {
           patientId: patient.id.toString(),
