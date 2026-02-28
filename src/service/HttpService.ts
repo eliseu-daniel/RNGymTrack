@@ -108,7 +108,7 @@ class HttpService {
     return { ...headers, ...(extra || {}) };
   }
 
-  private async request<T = any>(
+  async request<T = any>(
     path: string,
     method: HttpMethod = "GET",
     opts?: { body?: any; params?: QueryParams; headers?: Record<string, string>; isFormData?: boolean }

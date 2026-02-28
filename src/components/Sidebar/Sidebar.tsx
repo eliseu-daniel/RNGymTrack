@@ -1,15 +1,13 @@
 import http from "@/service/HttpService";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import Button from "../Button/Button";
 import { styles } from "./style";
 
 export default function Sidebar() {
   const router = useRouter();
-
-  const user = useLocalSearchParams().patientName as string;
-
+  const user = http.getPatient();
   const handleNavigationTraining = () => {
     router.push('/trainning');
   };
@@ -25,7 +23,7 @@ export default function Sidebar() {
   const hadleNavigationLogout = async () => {
     try {
 
-      await http.logoutPatient(); // chama API e limpa token
+      await http.logoutPatient();
 
       router.replace("/");
 
@@ -41,7 +39,7 @@ export default function Sidebar() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text}>{user}</Text>
+        <Text style={styles.text}>{user?.name}</Text>
       </View>
       <View style={styles.menu}>
         <Button title="Treinos" onPress={handleNavigationTraining} textStyle={styles.items} style={styles.button} />

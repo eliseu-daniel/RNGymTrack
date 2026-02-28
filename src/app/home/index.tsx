@@ -4,11 +4,12 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import React from "react";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
+import {http} from "@/service/HttpService";
 
 export default function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
     const router = useRouter();
-    const user = useLocalSearchParams().patientName as string;
+    const user = http.getPatient()
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -25,10 +26,10 @@ export default function Home() {
                 </View>
             )}
             <View style={styles.header}>
-                <Text style={styles.title}>GymTrackPro</Text>
+                <Text style={styles.title}>SynchroFit</Text>
             </View>
             <View style={styles.content}>
-                <Text style={styles.subtitle}>Bem-vindo, {user}.</Text>
+                <Text style={styles.subtitle}>Bem-vindo, {user?.name}.</Text>
             </View>
         </View>
     );

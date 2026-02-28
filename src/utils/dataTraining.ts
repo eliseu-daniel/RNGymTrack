@@ -1,110 +1,92 @@
-type Exercise = {
+export type Exercise = {
   id: string;
   title: string;
   series: number;
-  anterior: string;
-  kg: number;
   rep: number;
+  kg: number;
+  rest_time?: number | null;
+  duration_time?: number | null;
+  anterior?: string | null;
+  send_notification?: boolean;
 };
 
-export type DateWeek = {
-  segunda: { exercises: Exercise[] };
-  terça: { exercises: Exercise[] };
-  quarta: { exercises: Exercise[] };
-  quinta: { exercises: Exercise[] };
-  sexta: { exercises: Exercise[] };
-  sabado: { exercises: Exercise[] };
-  domingo: { exercises: Exercise[] };
-}[];
+export type WeekDayKey = | "segunda" | "terça" | "quarta" | "quinta" | "sexta" | "sabado" | "domingo";
+export type Week = Record<WeekDayKey, { exercises: Exercise[] }>;
+export type DateWeek = Week[];
 
-export const exerciseMonday = [
-  { id: '1', title: 'Supino Reto com Barra', series: 4, anterior: '50 x 8', kg: 55, rep: 8 },
-  { id: '2', title: 'Supino Inclinado com Halteres', series: 3, anterior: '40 x 10', kg: 45, rep: 10 },
-  { id: '3', title: 'Crucifixo com Halteres', series: 4, anterior: '20 x 12', kg: 25, rep: 12 },
-  { id: '4', title: 'Crossover na Polia', series: 5, anterior: '30 x 12', kg: 35, rep: 12 },
-  { id: '5', title: 'Pullover com Halter', series: 3, anterior: '25 x 10', kg: 30, rep: 10 },
-  { id: '6', title: 'Tríceps Testa com Barra EZ', series: 3, anterior: '20 x 12', kg: 25, rep: 12 },
-  { id: '7', title: 'Tríceps Coice com Halteres', series: 4, anterior: '15 x 15', kg: 20, rep: 15 },
-  { id: '8', title: 'Paralelas para Tríceps', series: 2, anterior: '00 x 10', kg: 0, rep: 10 },
-];
+const dayMap: Record<string, WeekDayKey> = {
+  seg: "segunda",
+  ter: "terça",
+  qua: "quarta",
+  qui: "quinta",
+  sex: "sexta",
+  sab: "sabado",
+  dom: "domingo",
+};
 
-export const exerciseTuesday = [
-  { id: '1', title: 'Barra Fixa Pronada', series: 4, anterior: '00 x 8', kg: 0, rep: 8 },
-  { id: '2', title: 'Remada Curvada com Barra', series: 4, anterior: '50 x 10', kg: 55, rep: 10 },
-  { id: '3', title: 'Pulldown na Polia', series: 3, anterior: '60 x 12', kg: 65, rep: 12 },
-  { id: '4', title: 'Remada Unilateral com Halter', series: 3, anterior: '25 x 12', kg: 30, rep: 12 },
-  { id: '5', title: 'Rosca Direta com Barra', series: 4, anterior: '20 x 10', kg: 25, rep: 10 },
-  { id: '6', title: 'Rosca Martelo com Halteres', series: 3, anterior: '15 x 12', kg: 18, rep: 12 },
-  { id: '7', title: 'Rosca Concentrada', series: 3, anterior: '10 x 15', kg: 12, rep: 15 },
-  { id: '8', title: 'Rosca Scott na Polia', series: 3, anterior: '20 x 12', kg: 25, rep: 12 },
-];
+type ItemWorkout = {
+  workout_item_id: number;
+  id: number;
+  workout_id: number;
+  exercise_id: number;
+  day_of_week: string;
+  series: number;
+  repetitions: number;
+  weight_load: number | null;
+  duration_time: number | null;
+  rest_time: number | null;
+  send_notification: number;
+  is_active: number;
+  exercise_name: string;
+};
 
-export const exerciseWednesday = [
-  { id: '1', title: 'Agachamento Livre', series: 4, anterior: '80 x 8', kg: 85, rep: 8 },
-  { id: '2', title: 'Leg Press 45º', series: 4, anterior: '120 x 10', kg: 130, rep: 10 },
-  { id: '3', title: 'Passada com Halteres', series: 3, anterior: '20 x 12', kg: 25, rep: 12 },
-  { id: '4', title: 'Cadeira Extensora', series: 3, anterior: '50 x 12', kg: 55, rep: 12 },
-  { id: '5', title: 'Cadeira Flexora', series: 3, anterior: '40 x 12', kg: 45, rep: 12 },
-  { id: '6', title: 'Panturrilha no Smith', series: 4, anterior: '60 x 15', kg: 65, rep: 15 },
-  { id: '7', title: 'Panturrilha Sentada', series: 3, anterior: '30 x 20', kg: 35, rep: 20 },
-  { id: '8', title: 'Elevação Pélvica', series: 3, anterior: '00 x 15', kg: 0, rep: 15 },
-];
+function createEmptyWeek(): Week {
+  return {
+    segunda: { exercises: [] },
+    terça: { exercises: [] },
+    quarta: { exercises: [] },
+    quinta: { exercises: [] },
+    sexta: { exercises: [] },
+    sabado: { exercises: [] },
+    domingo: { exercises: [] },
+  };
+}
 
-export const exerciseThursday = [
-  { id: '1', title: 'Desenvolvimento com Barra', series: 4, anterior: '40 x 8', kg: 45, rep: 8 },
-  { id: '2', title: 'Elevação Lateral com Halteres', series: 3, anterior: '12 x 12', kg: 15, rep: 12 },
-  { id: '3', title: 'Elevação Frontal com Halteres', series: 3, anterior: '10 x 12', kg: 12, rep: 12 },
-  { id: '4', title: 'Remada Alta na Polia', series: 3, anterior: '30 x 10', kg: 35, rep: 10 },
-  { id: '5', title: 'Abdominal Prancha', series: 3, anterior: '00 x 30s', kg: 0, rep: 30 },
-  { id: '6', title: 'Abdominal Infra com Banco', series: 4, anterior: '00 x 15', kg: 0, rep: 15 },
-  { id: '7', title: 'Abdominal Oblíquo com Rotação', series: 3, anterior: '00 x 20', kg: 0, rep: 20 },
-  { id: '8', title: 'Abdominal Crunch na Polia', series: 3, anterior: '20 x 12', kg: 25, rep: 12 },
-];
+export function buildWeekFromItems(
+  items: ItemWorkout[],
+  opts?: { onlyActive?: boolean; workoutId?: number; sortByName?: boolean }
+): DateWeek {
 
-export const exerciseFriday = [
-  { id: '1', title: 'Supino Reto com Halteres', series: 4, anterior: '35 x 10', kg: 40, rep: 10 },
-  { id: '2', title: 'Supino Declinado com Barra', series: 3, anterior: '60 x 8', kg: 65, rep: 8 },
-  { id: '3', title: 'Crucifixo Inclinado com Halteres', series: 3, anterior: '20 x 12', kg: 22, rep: 12 },
-  { id: '4', title: 'Peck Deck', series: 4, anterior: '40 x 12', kg: 45, rep: 12 },
-  { id: '5', title: 'Tríceps Francês com Halter', series: 3, anterior: '15 x 12', kg: 18, rep: 12 },
-  { id: '6', title: 'Tríceps na Polia com Corda', series: 4, anterior: '25 x 12', kg: 30, rep: 12 },
-  { id: '7', title: 'Mergulho em Banco', series: 3, anterior: '00 x 15', kg: 0, rep: 15 },
-  { id: '8', title: 'Supino Fechado com Barra', series: 3, anterior: '30 x 10', kg: 35, rep: 10 },
-];
+  const week = createEmptyWeek();
 
-export const exerciseSaturday = [
-  { id: '1', title: 'Levantamento Terra', series: 4, anterior: '80 x 8', kg: 85, rep: 8 },
-  { id: '2', title: 'Remada Baixa na Polia', series: 4, anterior: '50 x 12', kg: 55, rep: 12 },
-  { id: '3', title: 'Pulldown Supinado', series: 3, anterior: '55 x 10', kg: 60, rep: 10 },
-  { id: '4', title: 'Face Pull na Polia', series: 3, anterior: '20 x 12', kg: 25, rep: 12 },
-  { id: '5', title: 'Rosca Inclinada com Halteres', series: 3, anterior: '15 x 12', kg: 18, rep: 12 },
-  { id: '6', title: 'Rosca 21', series: 3, anterior: '10 x 21', kg: 12, rep: 21 },
-  { id: '7', title: 'Rosca Alternada com Halteres', series: 3, anterior: '12 x 12', kg: 15, rep: 12 },
-  { id: '8', title: 'Rosca na Polia Baixa', series: 3, anterior: '20 x 12', kg: 25, rep: 12 },
-];
+  const filtered = items
+    .filter((it) => (opts?.onlyActive ? it.is_active === 1 : true))
+    .filter((it) => (opts?.workoutId ? it.workout_id === opts.workoutId : true));
 
-export const DateWeek: DateWeek = [
-  {
-    segunda: {
-      exercises: exerciseMonday,
-    },
-    terça: {
-      exercises: exerciseTuesday,
-    },
-    quarta: {
-      exercises: exerciseWednesday,
-    },
-    quinta: {
-      exercises: exerciseThursday,
-    },
-    sexta: {
-      exercises: exerciseFriday,
-    },
-    sabado: {
-      exercises: exerciseSaturday,
-    },
-    domingo: {
-      exercises: [],
-    },
-  },
-];
+  for (const it of filtered) {
+    const key = dayMap[it.day_of_week];
+    if (!key) continue;
+
+    const ex: Exercise = {
+      id: String(it.workout_item_id ?? it.id),
+      title: it.exercise_name,
+      series: it.series,
+      rep: it.repetitions,
+      kg: it.weight_load ?? 0,
+      rest_time: it.rest_time ?? null,
+      duration_time: it.duration_time ?? null,
+      anterior: null,
+      send_notification: it.send_notification === 1,
+    };
+
+    week[key].exercises.push(ex);
+  }
+
+  if (opts?.sortByName) {
+    (Object.keys(week) as WeekDayKey[]).forEach((k) => {
+      week[k].exercises.sort((a, b) => a.title.localeCompare(b.title));
+    });
+  }
+
+  return [week];
+}
