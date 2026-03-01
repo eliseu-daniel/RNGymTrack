@@ -4,8 +4,6 @@ export interface DietData {
     diet_id: number;
     id: number;
     patient_id: number;
-    meals_id: number;
-    meal_time: string;
     diet_type: string;
     goal_weight: string;
     objective: string;
@@ -16,14 +14,14 @@ export interface DietData {
     start_date: string;
     end_date: string;
     finalized_at?: string;
-    meal_id: number;
-    meals_name: string;
 }
 
 export interface DietItem {
     diet_item_id: number;
     id: number;
     food_id: number;
+    meal_id: number;
+    meals_name: string;
     quantityItem: number;
     measure: string;
     others: string | null;
@@ -32,7 +30,6 @@ export interface DietItem {
     created_at: string;
     updated_at: string;
     food_name: string;
-    
 }
 
 export type DietItemsByMeal = Record<string, DietItem[]>;
