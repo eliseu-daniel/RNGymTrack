@@ -20,26 +20,33 @@ export interface DietData {
     meals_name: string;
 }
 
-export interface DietItemData {
+export interface DietItem {
     diet_item_id: number;
     id: number;
-    diet_id: number;
     food_id: number;
+    quantityItem: number;
     measure: string;
     others: string | null;
     send_notification: number;
     is_active: number;
+    created_at: string;
+    updated_at: string;
     food_name: string;
+    
 }
+
+export type DietItemsByMeal = Record<string, DietItem[]>;
 class DietService {
     async getDiets() {
         const res = await HttpService.request<{ diets?: DietData[] }>('/patients/diets');
         return res?.diets ?? [];
     }
 
-    async getDietItems() {
-        const res = await HttpService.request<{ DietItemData?: DietItemData[] }>('/patients/diet-items');
-        return res?.DietItemData ?? [];
+    async getDietItems(): Promise<DietItemsByMeal> {
+        const res = await HttpService.request<{ status: boolean; DietItemData?: DietItemsByMeal }>(
+            '/patients/diet-items'
+        );
+        return res?.DietItemData ?? {};
     }
 }
 

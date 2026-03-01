@@ -60,7 +60,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>SynchroFit</Text>
+      <Text style={styles.title}>Synchro Fit</Text>
       <Text style={styles.text}>E-mail</Text>
       <TextInput
         style={styles.input}

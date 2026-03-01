@@ -1,85 +1,39 @@
-import dietService from "@/service/DietService";
-import { colors } from "@/styles/colors";
-import { buildDietPlan, DietFood } from "@/utils/dataDiets";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { styles } from "./style";
 
-export default function ListDiet() {
-
-    const [foods, setFoods] = useState<DietFood[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function loadDiet() {
-            try {
-                setLoading(true);
-                const diets = await dietService.getDiets();
-                const items = await dietService.getDietItems();
-                const plans = buildDietPlan(diets, items, {
-                    onlyActive: true,
-                });
-                const firstMeal = plans?.[0]?.meals?.[0];
-                setFoods(firstMeal?.foods ?? []);
-            } catch (error) {
-                console.log("Erro carregando dieta:", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        loadDiet();
-    }, []);
-
-    if (loading) {
-        return (
-            <View>
-                <ActivityIndicator color={colors.secondary} size="large" />
-            </View>
-        );
-    }
-
-    return (
-        <FlatList
-            data={foods}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-                <View style={styles.row}>
-                    <Text style={styles.cell}>
-                        {item.name}
-                    </Text>
-                    <Text style={styles.cell}>
-                        {item.measure}
-                        {item.others ? ` - ${item.others}` : ""}
-                    </Text>
-                </View>
-            )}
-            ListEmptyComponent={
-                <Text style={{ marginTop: 10 }}>
-                    Nenhum alimento encontrado
-                </Text>
-            }
-        />
-    );
+interface DietItem {
+  diet_item_id: number;
+  food_name: string;
+  quantityItem: number;
+  measure: string;
 }
 
-// import { Text, View } from "react-native";
-// import { styles } from "./style";
+interface ListDietProps {
+  items: DietItem[];
+  mealName?: string;
+}
 
-// export default function ListDiet(){
-//     return (
-//         <View>
-//             <View style={styles.row}>
-//                 <Text style={styles.cell}>Abacaxi</Text>
-//                 <Text style={styles.cell}> 2 fatias médias</Text>
-//             </View>
-//             <View style={styles.row}>
-//                 <Text style={styles.cell}>Suco de Laranja</Text>
-//                 <Text style={styles.cell}> 200ml</Text>
-//             </View>
-//             <View style={styles.row}>
-//                 <Text style={styles.cell}>Pão de forma</Text>
-//                 <Text style={styles.cell}> 2 fatias</Text>
-//             </View>
-//         </View>
-//     );
-// }
+export default function ListDiet({ items, mealName }: ListDietProps) {
+  if (items.length === 0) {
+    return (
+      <Text style={{ textAlign: "center", marginTop: 40, color: "#666" }}>
+        Nenhum alimento cadastrado para {mealName || "esta refeição"}
+      </Text>
+    );
+  }
+
+  return (
+    <FlatList
+      data={items}
+      keyExtractor={(item) => String(item.diet_item_id)}
+      renderItem={({ item }) => (
+        <View style={styles.row}>
+          <Text style={styles.cell}>{item.food_name}</Text>
+          <Text style={styles.cell}>
+            {item.quantityItem} {item.measure}
+          </Text>
+        </View>
+      )}
+    />
+  );
+}

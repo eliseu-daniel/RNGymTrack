@@ -26,7 +26,7 @@ export default function Home() {
                 </View>
             )}
             <View style={styles.header}>
-                <Text style={styles.title}>SynchroFit</Text>
+                <Text style={styles.title}>Synchro Fit</Text>
             </View>
             <View style={styles.content}>
                 <Text style={styles.subtitle}>Bem-vindo, {user?.name}.</Text>
