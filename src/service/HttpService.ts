@@ -21,7 +21,7 @@ export type LoginPatientResponse = {
 };
 
 class HttpService {
-  private baseURL = "http://192.168.15.2:8000/api";
+  private baseURL = process.env.API_URL;
   private token: string | null = null;
 
   private tokenKey = "patient:bearer_token";
