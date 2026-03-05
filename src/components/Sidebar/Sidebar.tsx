@@ -8,16 +8,21 @@ import { styles } from "./style";
 export default function Sidebar() {
   const router = useRouter();
   const user = http.getPatient();
+
+  const handleNavigationHome = () => {
+    router.replace('/home');
+  };
+
   const handleNavigationTraining = () => {
-    router.push('/trainning');
+    router.replace('/trainning');
   };
 
   const handleNavigationDiet = () => {
-    router.push('/diet');
+    router.replace('/diet');
   };
 
   const handleNavigationFeedback = () => {
-    router.push('/feedback');
+    router.replace('/feedback');
   };
 
   const hadleNavigationLogout = async () => {
@@ -42,6 +47,7 @@ export default function Sidebar() {
         <Text style={styles.text}>{user?.name}</Text>
       </View>
       <View style={styles.menu}>
+        <Button title="Home" onPress={handleNavigationHome} textStyle={styles.items} style={styles.button} />
         <Button title="Treinos" onPress={handleNavigationTraining} textStyle={styles.items} style={styles.button} />
         <Button title="Dietas" onPress={handleNavigationDiet} textStyle={styles.items} style={styles.button} />
         <Button title="Feedbacks" onPress={handleNavigationFeedback} textStyle={styles.items} style={styles.button} />

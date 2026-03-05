@@ -3,10 +3,12 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   titleTraining:
-    {
-      marginLeft: 20,
-      fontSize: 20,
-      color: colors.blue,
-      marginTop: 20,
-    },
+  {
+    marginLeft: 20,
+    marginTop: 20,
+  },
+  textTitle: {
+    color: colors.blue,
+    fontSize: 20,
+  }
 });

@@ -4,6 +4,6 @@ export const colors = {
     text: "#FFFFFF",
     green: "#28A745",
     blue: "#008CFF",
-    dark: "#121212",
+    dark: "#000000",
     borderTable: "#918E8E",
 }
