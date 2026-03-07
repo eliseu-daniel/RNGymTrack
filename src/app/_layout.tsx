@@ -25,7 +25,7 @@ export default function RootLayout() {
       ];
 
       if (!token && protectedRoutes.includes(first)) {
-        router.replace("/index");
+        router.replace("index");
         return;
       }
 
