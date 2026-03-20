@@ -15,6 +15,7 @@ export type Week = Record<WeekDayKey, { exercises: Exercise[] }>;
 export type DateWeek = Week[];
 
 const dayMap: Record<string, WeekDayKey> = {
+  // Short string forms
   seg: "segunda",
   ter: "terça",
   qua: "quarta",
@@ -22,6 +23,14 @@ const dayMap: Record<string, WeekDayKey> = {
   sex: "sexta",
   sab: "sabado",
   dom: "domingo",
+  // Numeric string forms returned by some APIs (1 = Monday)
+  "1": "segunda",
+  "2": "terça",
+  "3": "quarta",
+  "4": "quinta",
+  "5": "sexta",
+  "6": "sabado",
+  "7": "domingo",
 };
 
 type ItemWorkout = {
