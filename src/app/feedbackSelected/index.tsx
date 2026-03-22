@@ -153,9 +153,12 @@ export default function FeedbackSelected() {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <Button title="←" onPress={handleNavigation} style={styles.button} textStyle={styles.btnText} textColor={colors.text} />
-
-                {/* <Text style={styles.title}>{title}</Text> */}
+                <View>
+                    <Button title="←" onPress={handleNavigation} style={styles.button} textStyle={styles.btnText} textColor={colors.text} />
+                </View>
+                <View style={styles.title}>
+                <Text style={styles.text}>{title}</Text>
+                </View>
 
                 <View style={styles.formArea}>
                     {loadingOptions ? (

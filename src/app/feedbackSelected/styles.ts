@@ -44,8 +44,8 @@ export const styles = StyleSheet.create({
     title: {
         alignItems: "center",
         justifyContent: "center",
-        marginTop: -24,
-        marginBottom: 22,
+        // marginTop: -24,
+        // marginBottom: 22,
     },
 
     text: {
@@ -55,12 +55,10 @@ export const styles = StyleSheet.create({
 
     formArea: {
         flex: 1,
-        backgroundColor: "rgba(255,255,255,0.18)",
         borderRadius: 12,
         paddingHorizontal: 10,
         paddingTop: 102,
         paddingBottom: 16,
-        justifyContent: "space-between",
     },
 
     loadingContainer: {
@@ -150,6 +148,7 @@ export const styles = StyleSheet.create({
         backgroundColor: colors.secondary,
         alignItems: "center",
         justifyContent: "center",
+        marginTop: 30,
     },
 
     submitButtonText: {
