@@ -19,6 +19,7 @@ export interface DietData {
 export interface DietItem {
     diet_item_id: number;
     id: number;
+    diet_id: number;
     food_id: number;
     meal_id: number;
     meals_name: string;

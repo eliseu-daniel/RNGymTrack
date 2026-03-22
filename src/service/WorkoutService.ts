@@ -11,7 +11,7 @@ interface WorkoutData {
     workout_type_name: string;
 }
 
-interface ItemWorkoutData {
+export interface ItemWorkoutData {
     workout_item_id: number;
     id: number;
     workout_id: number;
