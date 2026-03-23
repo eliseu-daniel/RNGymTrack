@@ -2,7 +2,7 @@ import httpWorkout from "@/service/WorkoutService";
 import { colors } from "@/styles/colors";
 import { buildWeekFromItems, DateWeek, WeekDayKey } from "@/utils/dataTraining";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import Button from "../Button/Button";
 import Exercises from "../ListExercises/Exercises";
@@ -45,6 +45,60 @@ export default function Training() {
     return week?.[0]?.[selectedDay]?.exercises ?? [];
   }, [week, selectedDay]);
 
+  const [timerSeconds, setTimerSeconds] = useState<number | null>(null);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const intervalRef = useRef<number | null>(null);
+
+  const startRest = (seconds: number) => {
+    if (!seconds || seconds <= 0) return;
+    setTimerSeconds(seconds);
+    setTimerRunning(true);
+  };
+
+  const stopRest = () => {
+    setTimerRunning(false);
+    setTimerSeconds(null);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current as unknown as number);
+      intervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    if (timerRunning && timerSeconds && timerSeconds > 0) {
+      intervalRef.current = setInterval(() => {
+        setTimerSeconds((prev) => {
+          if (!prev) return 0;
+          if (prev <= 1) {
+            setTimerRunning(false);
+            if (intervalRef.current) {
+              clearInterval(intervalRef.current as unknown as number);
+              intervalRef.current = null;
+            }
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000) as unknown as number;
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current as unknown as number);
+        intervalRef.current = null;
+      }
+    };
+  }, [timerRunning]);
+
+  const formatTime = (s: number | null) => {
+    if (!s || s <= 0) return "00:00";
+    const mm = Math.floor(s / 60)
+      .toString()
+      .padStart(2, "0");
+    const ss = (s % 60).toString().padStart(2, "0");
+    return `${mm}:${ss}`;
+  };
+
   const handleFinishTraining = () => {
     router.back();
   };
@@ -54,9 +108,10 @@ export default function Training() {
     anterior?: string | null;
     kg: number;
     rep: number;
+    rest_time?: number | null;
   };
 
-  const renderSeries = ({ series, anterior, kg, rep }: RenderSeriesProps) => {
+  const renderSeries = ({ series, anterior, kg, rep, rest_time }: RenderSeriesProps) => {
     return Array.from({ length: series }, (_, index) => (
       <Exercises
         key={`${index}`}
@@ -64,6 +119,9 @@ export default function Training() {
         anterior={anterior ?? "--"}
         kg={kg}
         rep={rep}
+        rest_time={rest_time}
+        onStartRest={startRest}
+        onStopRest={stopRest}
       />
     ));
   };
@@ -94,7 +152,7 @@ export default function Training() {
       </View>
 
       <View>
-        <Text style={styles.timer}>Timer {/* Colocar um timer aqui */}</Text>
+        <Text style={styles.timer}>{timerSeconds && timerSeconds > 0 ? `Descanso ${formatTime(timerSeconds)}` : ""}</Text>
       </View>
 
       <View style={styles.trainingContainer}>
@@ -110,6 +168,7 @@ export default function Training() {
                 anterior: item.anterior,
                 kg: item.kg,
                 rep: item.rep,
+                rest_time: item.rest_time ?? null,
               })}
             </View>
           )}
