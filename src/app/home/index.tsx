@@ -15,25 +15,6 @@ type NotificationItem = {
     read?: boolean;
 };
 
-function normalizeNotifications(items: any[], type: "diet" | "workout"): NotificationItem[] {
-    return items.map((item) => ({
-        id:
-            item.id ??
-            `${type}-${item.diet_item_id ?? item.workout_item_id ?? Math.random()}`,
-        type: item.type ?? type,
-        title:
-            item.title ??
-            (type === "diet" ? "Nova atualização na dieta" : "Novo treino atualizado"),
-        message:
-            item.message ??
-            (type === "diet"
-                ? "Seu plano alimentar foi atualizado."
-                : "Seu treino foi atualizado."),
-        created_at: item.created_at ?? null,
-        read: item.read ?? false,
-    }));
-}
-
 export default function Home() {
     const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = React.useState(false);
@@ -60,27 +41,39 @@ export default function Home() {
             const dietItems =
                 dietResponse.status === "fulfilled"
                     ? Array.isArray(dietResponse.value)
-                        ? dietResponse.value
+                        ? dietResponse.value.map((item) => ({
+                              ...item,
+                              id: String(item.id ?? item.diet_item_id ?? ""),
+                              type: item.type ?? "diet",
+                              title: item.title ?? "Nova atualização na dieta",
+                              message:
+                                  item.message ?? "Seu plano alimentar foi atualizado.",
+                              created_at: item.created_at ?? null,
+                              read: !!item.read,
+                          }))
                         : []
                     : [];
 
             const workoutItems =
                 workoutResponse.status === "fulfilled"
                     ? Array.isArray(workoutResponse.value)
-                        ? workoutResponse.value
+                        ? workoutResponse.value.map((item) => ({
+                              ...item,
+                              id: String(item.id ?? item.workout_item_id ?? ""),
+                              type: item.type ?? "workout",
+                              title: item.title ?? "Novo treino atualizado",
+                              message: item.message ?? "Seu treino foi atualizado.",
+                              created_at: item.created_at ?? null,
+                              read: !!item.read,
+                          }))
                         : []
                     : [];
 
-            const formattedDiet = normalizeNotifications(dietItems, "diet");
-            const formattedWorkout = normalizeNotifications(workoutItems, "workout");
-
-            const allNotifications = [...formattedDiet, ...formattedWorkout].sort(
-                (a, b) => {
-                    const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
-                    const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
-                    return dateB - dateA;
-                }
-            );
+            const allNotifications = [...dietItems, ...workoutItems].sort((a, b) => {
+                const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+                const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+                return dateB - dateA;
+            });
 
             setNotifications(allNotifications);
         } catch (error) {
@@ -132,7 +125,6 @@ export default function Home() {
             <View style={styles.header}>
                 <Text style={styles.title}>Synchro Fit</Text>
                 <Pressable onPress={toggleNotifications} style={styles.notificationButton}>
-
                     <Ionicons name="notifications-outline" size={26} color="#FFFFFF" />
 
                     {unreadCount > 0 && (
