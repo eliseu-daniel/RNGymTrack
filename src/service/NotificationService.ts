@@ -29,12 +29,29 @@ class NotificationService {
   }
 
   async getAllNotifications(): Promise<NotificationItem[]> {
-    const response = await http.request("/patients/notifications");
+    const dietResponse = await http.request("/patients/notifications/diet-items");
+    const workoutResponse = await http.request("/patients/notifications/workout-items");
 
-    const notifications = Array.isArray(response)
-      ? this.normalizeItems(response)
+    const notifications = Array.isArray(dietResponse)
+      ? this.normalizeItems(dietResponse)
       : [];
 
+    const workoutNotifications = Array.isArray(workoutResponse)
+      ? this.normalizeItems(workoutResponse)
+      : [];
+
+    return [...notifications, ...workoutNotifications].sort((a, b) => {
+      const dateA = a.created_at
+        ? new Date(a.created_at.replace(" ", "T")).getTime()
+        : 0;
+      const dateB = b.created_at
+        ? new Date(b.created_at.replace(" ", "T")).getTime()
+        : 0;
+      return dateB - dateA;
+    });
+  }
+
+  sortNotificationsByDate(notifications: NotificationItem[]): NotificationItem[] {
     return notifications.sort((a, b) => {
       const dateA = a.created_at
         ? new Date(a.created_at.replace(" ", "T")).getTime()
