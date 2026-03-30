@@ -2,6 +2,7 @@ import Button from "@/components/Button/Button";
 import DietService from "@/service/DietService";
 import FeedbackService from "@/service/FeedbackService";
 import WorkoutService from "@/service/WorkoutService";
+import { buildWeekFromItems, WeekDayKey } from "@/utils/dataTraining";
 import { colors } from "@/styles/colors";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
@@ -102,33 +103,51 @@ export default function FeedbackSelected() {
                 if (choice === "treino") {
                     const workoutItems = await WorkoutService.getWorkoutItems();
 
-                    const uniqueDays = Array.from(
-                        new Map(
-                            workoutItems.map((item) => [
-                                item.id,
-                                {
-                                    id: item.id,
-                                    label: item.day_of_week,
-                                },
-                            ])
-                        ).values()
-                    );
+                    const normalizedItems = workoutItems.map((item) => ({
+                        ...item,
+                        rest_time: item.rest_time ? Number(item.rest_time) : null,
+                        duration_time: null,
+                        send_notification: 0,
+                    }));
 
-                    setOptions(uniqueDays);
+                    const built = buildWeekFromItems(normalizedItems, { onlyActive: true });
 
-                    if (uniqueDays.length > 0) {
-                        setSelectedItem(uniqueDays[0]);
+                    const dayLabels: Record<WeekDayKey, string> = {
+                        segunda: "Segunda",
+                        "terça": "Terça",
+                        quarta: "Quarta",
+                        quinta: "Quinta",
+                        sexta: "Sexta",
+                        sabado: "Sábado",
+                        domingo: "Domingo",
+                    };
+
+                    const week = built[0];
+
+                    const availableDays: OptionItem[] = week
+                        ? (Object.keys(week) as WeekDayKey[])
+                              .filter((day) => (week[day]?.exercises?.length ?? 0) > 0)
+                              .map((day) => ({
+                                  id: Number(week[day].exercises[0].id),
+                                  label: dayLabels[day] ?? (day.charAt(0).toUpperCase() + day.slice(1)),
+                              }))
+                        : [];
+
+                    setOptions(availableDays);
+
+                    if (availableDays.length > 0) {
+                        setSelectedItem(availableDays[0]);
                     }
                 }
 
                 if (choice === "dieta") {
                     const dietItemsByMeal = await DietService.getDietItems();
 
-                    const meals = Object.entries(dietItemsByMeal).map(([mealName, items]) => {
+                    const meals: OptionItem[] = Object.entries(dietItemsByMeal).map(([mealName, items]) => {
                         const firstItem = items[0];
 
                         return {
-                            id: firstItem?.id ?? Math.random(),
+                            id: Number(firstItem?.id ?? Math.random()),
                             label: mealName,
                             diet_id: firstItem?.diet_id,
                         };
@@ -154,10 +173,17 @@ export default function FeedbackSelected() {
         <View style={styles.container}>
             <View style={styles.content}>
                 <View>
-                    <Button title="←" onPress={handleNavigation} style={styles.button} textStyle={styles.btnText} textColor={colors.text} />
+                    <Button
+                        title="←"
+                        onPress={handleNavigation}
+                        style={styles.button}
+                        textStyle={styles.btnText}
+                        textColor={colors.text}
+                    />
                 </View>
+
                 <View style={styles.title}>
-                <Text style={styles.text}>{title}</Text>
+                    <Text style={styles.text}>{title}</Text>
                 </View>
 
                 <View style={styles.formArea}>
