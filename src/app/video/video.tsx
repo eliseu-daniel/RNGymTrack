@@ -2,13 +2,16 @@ import Button from "@/components/Button/Button";
 import { colors } from "@/styles/colors";
 import { router } from "expo-router";
 import { Linking, Pressable, Text, View } from "react-native";
+import {ExerciseData, getExercises} from "@/service/ExerciseService";
 
 import { styles } from "./style";
+import { useState } from "react";
 
 export default function Video() {
     const handleBack = () => {
         router.back();
     };
+
 
     const youtubeUrl = "https://www.youtube.com/watch?v=YiP-Zhk5YMk";
 
