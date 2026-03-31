@@ -105,11 +105,13 @@ export default function Video() {
             <WebView
               source={{ uri: embedUrl }}
               style={styles.video}
+              originWhitelist={["*"]}
               javaScriptEnabled
               domStorageEnabled
               allowsInlineMediaPlayback
               mediaPlaybackRequiresUserAction={false}
               allowsFullscreenVideo
+              scalesPageToFit={false}
             />
           ) : (
             <Text style={styles.text}>Vídeo não disponível.</Text>

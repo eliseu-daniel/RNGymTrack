@@ -62,13 +62,11 @@ export const styles = StyleSheet.create({
   videoContent: {
     marginTop: 30,
     width: "100%",
-    height: 400, 
-    alignItems: "center",
+    height: 220,
+    paddingHorizontal: 10,
   },
   video: {
-    width: "95%",
-    height: "100%", 
+    flex: 1,
     borderRadius: 12,
-    // overflow: "hidden",
   },
 });
