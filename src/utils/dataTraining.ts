@@ -8,6 +8,7 @@ export type Exercise = {
   duration_time?: number | null;
   anterior?: string | null;
   send_notification?: boolean;
+  exercise_id?: string | number;
 };
 
 export type WeekDayKey = | "segunda" | "terça" | "quarta" | "quinta" | "sexta" | "sabado" | "domingo";
@@ -33,7 +34,7 @@ const dayMap: Record<string, WeekDayKey> = {
   "7": "domingo",
 };
 
-type ItemWorkout = {
+export type ItemWorkout = {
   workout_item_id: number;
   id: number;
   workout_id: number;
@@ -86,6 +87,7 @@ export function buildWeekFromItems(
       duration_time: it.duration_time ?? null,
       anterior: null,
       send_notification: it.send_notification === 1,
+      exercise_id: it.exercise_id,
     };
 
     week[key].exercises.push(ex);

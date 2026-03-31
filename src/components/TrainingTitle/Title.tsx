@@ -4,17 +4,17 @@ import Button from "../Button/Button";
 import { styles } from "./style";
 
 type TitleProps = {
+  id: number;
   title: string;
 };
 
-export default function TrainingTitle({ title }: TitleProps) {
+export default function TrainingTitle({ title, id }: TitleProps) {
   const handleViewExecution = () => {
-    router.push("/video/video");
+    router.push(`/video/video?id=${id}`);
   };
 
   return (
     <View>
-      {/* <Text style={styles.titleTraining}>{title}</Text> */}
       <Button title={title} onPress={handleViewExecution} textStyle={styles.textTitle} style={styles.titleTraining}/>
     </View>
   );

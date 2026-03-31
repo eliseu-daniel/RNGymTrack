@@ -161,7 +161,7 @@ export default function Training() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View>
-              <TrainingTitle title={item.title} />
+              <TrainingTitle title={item.title} id={Number(item.exercise_id)} />
               <TrainingHeader />
               {renderSeries({
                 series: item.series,

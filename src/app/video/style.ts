@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     },
     linkText: {
         textAlign: "center",
-        color: colors.blue,
+        color: 'red',
         fontSize: 24,
         marginTop: 30,
     },

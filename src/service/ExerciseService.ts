@@ -1,4 +1,4 @@
-import HttpService from './HttpService';
+import HttpService from "./HttpService";
 
 export interface ExerciseData {
   exercise_id: number;
@@ -11,9 +11,12 @@ export interface ExerciseData {
 }
 
 class ExerciseService {
-  async getExercises(id: number) {
-    const res = await HttpService.request<{ exercises?: ExerciseData[] }>(`/patients/exercises/${id}`);
-    return res?.exercises ?? [];
+  async getExercise(id: number): Promise<ExerciseData> {
+    const res = await HttpService.request<{
+      status: boolean;
+      "Exercise:": ExerciseData;
+    }>(`/patients/exercises/${id}`);
+    return res["Exercise:"];
   }
 }
 
