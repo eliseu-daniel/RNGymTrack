@@ -11,6 +11,7 @@ export default function Video() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [exercise, setExercise] = useState<ExerciseData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -36,30 +37,52 @@ export default function Video() {
     router.back();
   };
 
-  const getEmbedUrl = (url: string) => {
+  const getVideoId = (url: string): string => {
     if (!url || typeof url !== "string") return "";
 
     const embedMatch = url.match(/youtube\.com\/embed\/([^?&]+)/);
-    if (embedMatch?.[1]) {
-      return `https://www.youtube.com/embed/${embedMatch[1]}?playsinline=1&rel=0&modestbranding=1`;
-    }
+    if (embedMatch?.[1]) return embedMatch[1];
 
     const watchMatch = url.match(/[?&]v=([^&]+)/);
-    if (watchMatch?.[1]) {
-      return `https://www.youtube.com/embed/${watchMatch[1]}?playsinline=1&rel=0&modestbranding=1`;
-    }
+    if (watchMatch?.[1]) return watchMatch[1];
 
     const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
-    if (shortMatch?.[1]) {
-      return `https://www.youtube.com/embed/${shortMatch[1]}?playsinline=1&rel=0&modestbranding=1`;
-    }
+    if (shortMatch?.[1]) return shortMatch[1];
 
     return "";
   };
 
-  const embedUrl = useMemo(() => {
-    return exercise?.link_exercise ? getEmbedUrl(exercise.link_exercise) : "";
+  const videoId = useMemo(() => {
+    return exercise?.link_exercise ? getVideoId(exercise.link_exercise) : "";
   }, [exercise]);
+
+  const embedHtml = useMemo(() => {
+    if (!videoId) return "";
+    return `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; background-color: #000; }
+            html, body { width: 100%; height: 100%; }
+            iframe { width: 100%; height: 100%; border: none; }
+          </style>
+        </head>
+        <body>
+          <iframe
+            src="https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&autoplay=0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </body>
+      </html>
+    `;
+  }, [videoId]);
+
+  const handleVideoError = () => {
+    setVideoError(true);
+  };
 
   if (loading) {
     return (
@@ -101,9 +124,9 @@ export default function Video() {
         </View>
 
         <View style={styles.videoContent}>
-          {embedUrl ? (
+          {videoId && !videoError ? (
             <WebView
-              source={{ uri: embedUrl }}
+              source={{ html: embedHtml, baseUrl: "https://www.youtube.com" }}
               style={styles.video}
               originWhitelist={["*"]}
               javaScriptEnabled
@@ -112,9 +135,32 @@ export default function Video() {
               mediaPlaybackRequiresUserAction={false}
               allowsFullscreenVideo
               scalesPageToFit={false}
+              mixedContentMode="always"
+              onError={handleVideoError}
+              onHttpError={(e) => {
+                if (e.nativeEvent.statusCode >= 400) {
+                  setVideoError(true);
+                }
+              }}
             />
           ) : (
-            <Text style={styles.text}>Vídeo não disponível.</Text>
+            <View style={styles.fallback}>
+              <Text style={styles.fallbackText}>
+                {videoError
+                  ? "Este vídeo não permite reprodução incorporada."
+                  : "Vídeo não disponível."}
+              </Text>
+              {exercise.link_exercise ? (
+                <Pressable
+                  style={styles.fallbackButton}
+                  onPress={() => Linking.openURL(exercise.link_exercise)}
+                >
+                  <Text style={styles.fallbackButtonText}>
+                    ▶ Assistir no YouTube
+                  </Text>
+                </Pressable>
+              ) : null}
+            </View>
           )}
         </View>
       </View>

@@ -69,4 +69,28 @@ export const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 12,
   },
+  fallback: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 16,
+    paddingHorizontal: 20,
+  },
+  fallbackText: {
+    color: colors.text,
+    fontSize: 16,
+    textAlign: "center",
+    opacity: 0.7,
+  },
+  fallbackButton: {
+    backgroundColor: "#FF0000",
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+    borderRadius: 8,
+  },
+  fallbackButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
