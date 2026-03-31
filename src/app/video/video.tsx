@@ -2,7 +2,7 @@ import Button from "@/components/Button/Button";
 import exerciseService, { ExerciseData } from "@/service/ExerciseService";
 import { colors } from "@/styles/colors";
 import { router, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { styles } from "./style";
@@ -17,10 +17,10 @@ export default function Video() {
       setLoading(false);
       return;
     }
+
     const fetchExercise = async () => {
       try {
         const data = await exerciseService.getExercise(Number(id));
-
         setExercise(data);
       } catch (error) {
         console.error("Erro ao buscar exercício:", error);
@@ -28,6 +28,7 @@ export default function Video() {
         setLoading(false);
       }
     };
+
     fetchExercise();
   }, [id]);
 
@@ -36,9 +37,29 @@ export default function Video() {
   };
 
   const getEmbedUrl = (url: string) => {
-    if (!url || typeof url !== "string") return url;
-    return url;
+    if (!url || typeof url !== "string") return "";
+
+    const embedMatch = url.match(/youtube\.com\/embed\/([^?&]+)/);
+    if (embedMatch?.[1]) {
+      return `https://www.youtube.com/embed/${embedMatch[1]}?playsinline=1&rel=0&modestbranding=1`;
+    }
+
+    const watchMatch = url.match(/[?&]v=([^&]+)/);
+    if (watchMatch?.[1]) {
+      return `https://www.youtube.com/embed/${watchMatch[1]}?playsinline=1&rel=0&modestbranding=1`;
+    }
+
+    const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+    if (shortMatch?.[1]) {
+      return `https://www.youtube.com/embed/${shortMatch[1]}?playsinline=1&rel=0&modestbranding=1`;
+    }
+
+    return "";
   };
+
+  const embedUrl = useMemo(() => {
+    return exercise?.link_exercise ? getEmbedUrl(exercise.link_exercise) : "";
+  }, [exercise]);
 
   if (loading) {
     return (
@@ -66,24 +87,29 @@ export default function Video() {
           textStyle={styles.btnText}
           textColor={colors.text}
         />
+
         <Text style={styles.textBlue}>
-          {exercise?.exercise || "Nome não disponível"}
+          {exercise.exercise || "Nome não disponível"}
         </Text>
+
         <Text style={styles.text}>Execução:</Text>
+
         <View style={styles.link}>
           <Pressable onPress={() => Linking.openURL(exercise.link_exercise)}>
             <Text style={styles.linkText}>Ver no YouTube</Text>
           </Pressable>
         </View>
+
         <View style={styles.videoContent}>
-          {exercise.link_exercise ? (
+          {embedUrl ? (
             <WebView
-              source={{ uri: getEmbedUrl(exercise.link_exercise) }}
+              source={{ uri: embedUrl }}
               style={styles.video}
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
-              allowsInlineMediaPlayback={true}
+              javaScriptEnabled
+              domStorageEnabled
+              allowsInlineMediaPlayback
               mediaPlaybackRequiresUserAction={false}
+              allowsFullscreenVideo
             />
           ) : (
             <Text style={styles.text}>Vídeo não disponível.</Text>
