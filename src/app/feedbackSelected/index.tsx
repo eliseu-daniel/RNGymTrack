@@ -8,6 +8,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import {
     ActivityIndicator,
+    Alert,
     Pressable,
     ScrollView,
     Text,
@@ -85,8 +86,8 @@ export default function FeedbackSelected() {
 
             console.log("Feedback enviado com sucesso.");
             router.back();
-        } catch (error) {
-            console.error("Erro ao enviar feedback:", error);
+        } catch (error: any) {
+            Alert.alert("Não foi possível enviar o feedback. Tente novamente.");
         }
     };
 

@@ -141,7 +141,8 @@ class HttpService {
 
     if (!res.ok) {
       const errorBody = await parse().catch(() => null);
-      const err: any = new Error(`HTTP ${res.status}: ${res.statusText}`);
+      const errorMessage = errorBody?.message || errorBody?.error || `HTTP ${res.status}: ${res.statusText}`;
+      const err: any = new Error(errorMessage);
       err.status = res.status;
       err.body = errorBody;
       err.url = url;
