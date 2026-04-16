@@ -5,7 +5,7 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Linking, Pressable, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
-import { styles } from "./style";
+import { styles } from "../../styles/pages/video/style";
 
 export default function Video() {
   const { id } = useLocalSearchParams<{ id: string }>();

@@ -6,7 +6,7 @@ import { normalizeMealName } from "@/utils/stringUtils";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
-import { styles } from "./style";
+import { styles } from "../../styles/pages/dietSelected/style";
 
 export default function DietSelected() {
     const router = useRouter();

@@ -14,7 +14,7 @@ import {
     TextInput,
     View,
 } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../../styles/pages/feedbackSelected/styles";
 
 type OptionItem = {
     id: number;

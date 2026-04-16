@@ -6,7 +6,7 @@ import { colors } from "@/styles/colors";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../../styles/pages/diet/styles";
 
 export default function Diet() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);

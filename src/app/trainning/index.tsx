@@ -7,7 +7,7 @@ import { buildWeekFromItems, WeekDayKey } from "@/utils/dataTraining";
 import { useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Text, View } from "react-native";
-import { styles } from "./styles";
+import { styles } from "../../styles/pages/trainning/styles";
 
 export default function Training() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
