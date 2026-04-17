@@ -3,7 +3,7 @@ import http from "@/service/HttpService";
 import { colors } from "@/styles/colors";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Alert, Image, Text, TextInput, View } from "react-native";
 import { styles } from "@/styles/pages/index/style";
 
 export default function Index() {
@@ -60,7 +60,12 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Synchro Fit</Text>
+      <Image
+        source={require("@/assets/logo.png")}
+        style={styles.image}
+        resizeMode="cover"
+      />
+      {/* <Text style={styles.title}>Synchro Fit</Text> */}
       <Text style={styles.text}>E-mail</Text>
       <TextInput
         style={styles.input}
