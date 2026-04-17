@@ -1,4 +1,4 @@
-import HttpService from './HttpService';
+import HttpService from '@/service/HttpService';
 
 export interface DietData {
     diet_id: number;

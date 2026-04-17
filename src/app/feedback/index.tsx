@@ -5,7 +5,7 @@ import { colors } from "@/styles/colors";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
-import { styles } from "../../styles/pages/feedback/styles";
+import { styles } from "@/styles/pages/feedback/styles";
 
 export default function FeedBacks() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);

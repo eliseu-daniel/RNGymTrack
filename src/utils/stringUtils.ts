@@ -1,4 +1,3 @@
-// utils/stringUtils.ts (ou dentro do componente mesmo)
 export function normalizeMealName(name: string): string {
     return name
         .normalize("NFD")                // separa acentos

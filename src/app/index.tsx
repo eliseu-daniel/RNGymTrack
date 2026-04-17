@@ -4,7 +4,7 @@ import { colors } from "@/styles/colors";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, Text, TextInput, View } from "react-native";
-import { styles } from "../styles/pages/index/style";
+import { styles } from "@/styles/pages/index/style";
 
 export default function Index() {
   const router = useRouter();

@@ -1,4 +1,4 @@
-import HttpService from './HttpService';
+import HttpService from '@/service/HttpService';
 
 interface WorkoutData {
     id: number;

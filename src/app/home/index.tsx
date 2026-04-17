@@ -5,7 +5,7 @@ import NotificationService, {NotificationItem,} from "@/service/NotificationServ
 import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { styles } from "../../styles/pages/home/styles";
+import { styles } from "@/styles/pages/home/styles";
 
 export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
