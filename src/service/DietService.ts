@@ -23,7 +23,7 @@ export interface DietItem {
     food_id: number;
     meal_id: number;
     meals_name: string;
-    quantityItem: number;
+    quantity: number;
     measure: string;
     others: string | null;
     send_notification: number;

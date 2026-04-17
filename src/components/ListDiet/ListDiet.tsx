@@ -4,7 +4,7 @@ import { styles } from "./style";
 interface DietItem {
   diet_item_id: number;
   food_name: string;
-  quantityItem: number;
+  quantity: number;
   measure: string;
 }
 
@@ -30,7 +30,7 @@ export default function ListDiet({ items, mealName }: ListDietProps) {
         <View style={styles.row}>
           <Text style={styles.cell}>{item.food_name}</Text>
           <Text style={styles.cell}>
-            {item.quantityItem} {item.measure}
+            {item.quantity} {item.measure}
           </Text>
         </View>
       )}
