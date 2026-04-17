@@ -65,7 +65,6 @@ export default function Index() {
         style={styles.image}
         resizeMode="cover"
       />
-      {/* <Text style={styles.title}>Synchro Fit</Text> */}
       <Text style={styles.text}>E-mail</Text>
       <TextInput
         style={styles.input}
